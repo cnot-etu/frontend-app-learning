@@ -136,7 +136,7 @@ function OutlineTab({ intl }) {
           }}
         />
       </div>
-      <div className="col col-12 col-md-8 leti-course-home-outline">
+      <div className="col-12 col-lg-8 leti-course-home-outline">
         { /** [MM-P2P] Experiment (the conditional) */ }
         { !MMP2P.state.isEnabled
           && (
@@ -182,7 +182,7 @@ function OutlineTab({ intl }) {
         )}
       </div>
       {rootCourseId && (
-        <div className="col col-12 col-md-4 leti-course-home-sidebar">
+        <div className="col-12 col-lg-4 leti-course-home-sidebar">
           <CourseTools />
           <CourseDates
             /** [MM-P2P] Experiment */
