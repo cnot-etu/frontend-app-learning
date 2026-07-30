@@ -8,12 +8,10 @@ import {
   injectIntl,
   intlShape,
 } from '@edx/frontend-platform/i18n';
-import { faCheckCircle as fasCheckCircle } from '@fortawesome/free-solid-svg-icons';
-import { faCheckCircle as farCheckCircle } from '@fortawesome/free-regular-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import EffortEstimate from '../../shared/effort-estimate';
 import { useModel } from '../../generic/model-store';
+import { SequenceStatusIcon } from './StatusIcon';
 import messages from './messages';
 
 function SequenceLink({
@@ -35,37 +33,29 @@ function SequenceLink({
   } = useModel('outline', courseId);
 
   const timezoneFormatArgs = userTimezone ? { timeZone: userTimezone } : {};
+  const locked = !showLink && !complete;
 
   const coursewareUrl = <Link to={`/course/${courseId}/${id}`}>{title}</Link>;
   const displayTitle = showLink ? coursewareUrl : title;
 
+  let statusLabel = messages.incompleteAssignment;
+  if (complete) {
+    statusLabel = messages.completedAssignment;
+  } else if (locked) {
+    statusLabel = messages.lockedAssignment;
+  }
+
   return (
-    <li>
+    <li className={classNames('leti-unit-row', { 'leti-unit-row--locked': locked })}>
       <div className={classNames('', { 'mt-2 pt-2 border-top border-light': !first })}>
-        <div className="row w-100 m-0">
+        <div className="row w-100 m-0 align-items-start">
           <div className="col-auto p-0">
-            {complete ? (
-              <FontAwesomeIcon
-                icon={fasCheckCircle}
-                fixedWidth
-                className="float-left text-success mt-1"
-                aria-hidden="true"
-                title={intl.formatMessage(messages.completedAssignment)}
-              />
-            ) : (
-              <FontAwesomeIcon
-                icon={farCheckCircle}
-                fixedWidth
-                className="float-left text-gray-400 mt-1"
-                aria-hidden="true"
-                title={intl.formatMessage(messages.incompleteAssignment)}
-              />
-            )}
+            <SequenceStatusIcon complete={complete} locked={locked} intl={intl} />
           </div>
           <div className="col-10 p-0 ml-3 text-break">
             <span className="align-middle">{displayTitle}</span>
             <span className="sr-only">
-              , {intl.formatMessage(complete ? messages.completedAssignment : messages.incompleteAssignment)}
+              , {intl.formatMessage(statusLabel)}
             </span>
             <EffortEstimate className="ml-3 align-middle" block={sequence} />
           </div>

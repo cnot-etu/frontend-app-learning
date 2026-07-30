@@ -8,20 +8,14 @@
   }
 
   .grade-bar__divider {
-    fill: $primary-500;
+    fill: #00497c;
     width: 1px;
   }
 
-  .grade-bar--passing {
-    fill: $primary-500;
-  }
-
-  .grade-bar--current-passing {
-    fill: $success-500;
-  }
-
+  // Current student score — LETI navy blue line only
+  .grade-bar--current-passing,
   .grade-bar--current-non-passing {
-    fill: $accent-b;
+    fill: #00497c;
   }
 }
 
@@ -29,24 +23,38 @@
   margin: 0 !important;
 }
 
+// Required grade — marker only (no threshold fill line)
+circle.grade-bar--passing {
+  fill: #8fd19a;
+}
+
 #minimum-grade-tooltip {
+  background: #8fd19a !important;
+
   .arrow::after {
-    border-bottom-color: $primary-500;
+    border-bottom-color: #8fd19a !important;
+  }
+
+  .popover-body,
+  .pgn__popover-content {
+    color: #1a3d1f !important;
   }
 }
 
-#passing-grade-tooltip {
-  .arrow::after {
-    border-top-color: $success-500;
-  }
-
-  background: $success-500;
-}
-
+// Current grade tooltip — navy blue
+#current-grade-tooltip,
+#passing-grade-tooltip,
 #non-passing-grade-tooltip {
+  background: #00497c !important;
+
   .arrow::after {
-    border-top-color: $accent-b;
+    border-top-color: #00497c !important;
   }
 
-  background: $accent-b;
+  .popover-body,
+  .pgn__popover-content,
+  .text-white,
+  .text-dark-700 {
+    color: #fff !important;
+  }
 }

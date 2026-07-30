@@ -18,7 +18,6 @@ function CurrentGradeTooltip({ intl, tooltipClassName }) {
 
   const {
     courseGrade: {
-      isPassing,
       percent,
     },
   } = useModel('progress', courseId);
@@ -39,8 +38,8 @@ function CurrentGradeTooltip({ intl, tooltipClassName }) {
         show
         placement="top"
         overlay={(
-          <Popover id={`${isPassing ? 'passing' : 'non-passing'}-grade-tooltip`} aria-hidden="true" className={tooltipClassName}>
-            <Popover.Content data-testid="currentGradeTooltipContent" className={isPassing ? 'text-white' : 'text-dark-700'}>
+          <Popover id="current-grade-tooltip" aria-hidden="true" className={`leti-current-grade-tooltip ${tooltipClassName}`}>
+            <Popover.Content data-testid="currentGradeTooltipContent" className="text-white">
               {currentGrade.toFixed(0)}{isLocaleRtl ? '\u200f' : ''}%
             </Popover.Content>
           </Popover>

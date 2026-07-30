@@ -3,8 +3,7 @@ import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
-import { CheckCircle, WarningFilled } from '@edx/paragon/icons';
-import { breakpoints, Icon, useWindowSize } from '@edx/paragon';
+import { breakpoints, useWindowSize } from '@edx/paragon';
 import { useModel } from '../../../../generic/model-store';
 
 import GradeRangeTooltip from './GradeRangeTooltip';
@@ -49,15 +48,9 @@ function CourseGradeFooter({ intl, passingGrade }) {
     }
   }
 
-  const icon = isPassing ? <Icon src={CheckCircle} className="text-success-300 d-inline-flex align-bottom" />
-    : <Icon src={WarningFilled} className="d-inline-flex align-bottom" />;
-
   return (
     <div className={`row w-100 m-0 px-4 py-3 py-md-4 rounded-bottom ${isPassing ? 'bg-success-100' : 'bg-warning-100'}`}>
-      <div className="col-auto p-0">
-        {icon}
-      </div>
-      <div className="col-11 pl-2 px-0">
+      <div className="col-12 px-0">
         {!wideScreen && (
           <span className="h5 align-bottom">
             {footerText}

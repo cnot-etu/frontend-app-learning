@@ -14,6 +14,7 @@ import useEnrollmentAlert from '../alerts/enrollment-alert';
 import useLogistrationAlert from '../alerts/logistration-alert';
 
 import ProductTours from '../product-tours/ProductTours';
+import CourseHomeHeader from './CourseHomeHeader';
 
 function LoadedTabPage({
   activeTabSlug,
@@ -41,6 +42,8 @@ function LoadedTabPage({
   const streakLengthToCelebrate = celebrations && celebrations.streakLengthToCelebrate;
   const streakDiscountCouponEnabled = celebrations && celebrations.streakDiscountEnabled && verifiedMode;
   const [isStreakCelebrationOpen,, closeStreakCelebration] = useToggle(streakLengthToCelebrate);
+  // In Learning MFE, the /home route is backed by the "outline" tab slug.
+  const showCourseHomeHeader = activeTabSlug === 'home' || activeTabSlug === 'outline';
 
   return (
     <>
@@ -53,13 +56,6 @@ function LoadedTabPage({
       <Helmet>
         <title>{`${activeTab ? `${activeTab.title} | ` : ''}${title} | ${getConfig().SITE_NAME}`}</title>
       </Helmet>
-      {originalUserIsStaff && (
-        <InstructorToolbar
-          courseId={courseId}
-          unitId={unitId}
-          tab={activeTabSlug}
-        />
-      )}
       <StreakModal
         courseId={courseId}
         metadataModel={metadataModel}
@@ -78,6 +74,14 @@ function LoadedTabPage({
             ...logistrationAlert,
           }}
         />
+        {showCourseHomeHeader && <CourseHomeHeader courseId={courseId} />}
+        {originalUserIsStaff && (
+          <InstructorToolbar
+            courseId={courseId}
+            unitId={unitId}
+            tab={activeTabSlug}
+          />
+        )}
         <CourseTabsNavigation tabs={tabs} className="mb-3" activeTabSlug={activeTabSlug} />
         <div className="container-xl">
           {children}

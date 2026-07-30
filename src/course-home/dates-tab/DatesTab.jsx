@@ -48,7 +48,7 @@ function DatesTab({ intl }) {
 
   return (
     <>
-      <div role="heading" aria-level="1" className="h2 my-3">
+      <div role="heading" aria-level="2" className="h2 my-3">
         {intl.formatMessage(messages.title)}
       </div>
       { /** [MM-P2P] Experiment */ }

@@ -2,11 +2,10 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import { Collapsible, IconButton } from '@edx/paragon';
-import { faCheckCircle as fasCheckCircle, faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
-import { faCheckCircle as farCheckCircle } from '@fortawesome/free-regular-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 
 import SequenceLink from './SequenceLink';
+import { SectionStatusIcon } from './StatusIcon';
 import { useModel } from '../../generic/model-store';
 
 import genericMessages from '../../generic/messages';
@@ -21,6 +20,7 @@ function Section({
 }) {
   const {
     complete,
+    resumeBlock,
     sequenceIds,
     title,
   } = section;
@@ -31,6 +31,9 @@ function Section({
   } = useModel('outline', courseId);
 
   const [open, setOpen] = useState(defaultOpen);
+  const inProgress = !complete && !!resumeBlock;
+  const completedCount = sequenceIds.filter((id) => sequences[id] && sequences[id].complete).length;
+  const totalCount = sequenceIds.length;
 
   useEffect(() => {
     setOpen(expand);
@@ -40,40 +43,54 @@ function Section({
     setOpen(defaultOpen);
   }, []);
 
+  let statusLabel = messages.incompleteSection;
+  if (complete) {
+    statusLabel = messages.completedSection;
+  } else if (inProgress) {
+    statusLabel = messages.inProgressSection;
+  }
+
   const sectionTitle = (
-    <div className="row w-100 m-0">
+    <div className="leti-section-title row w-100 m-0 align-items-center">
       <div className="col-auto p-0">
-        {complete ? (
-          <FontAwesomeIcon
-            icon={fasCheckCircle}
-            fixedWidth
-            className="float-left mt-1 text-success"
-            aria-hidden="true"
-            title={intl.formatMessage(messages.completedSection)}
-          />
-        ) : (
-          <FontAwesomeIcon
-            icon={farCheckCircle}
-            fixedWidth
-            className="float-left mt-1 text-gray-400"
-            aria-hidden="true"
-            title={intl.formatMessage(messages.incompleteSection)}
-          />
-        )}
+        <SectionStatusIcon complete={complete} inProgress={inProgress} intl={intl} />
       </div>
-      <div className="col-10 ml-3 p-0 font-weight-bold text-dark-500">
-        <span className="align-middle">{title}</span>
+      <div className="col p-0 ml-3 font-weight-bold text-dark-500 min-width-0">
+        <span className="align-middle d-inline-block text-break">{title}</span>
         <span className="sr-only">
-          , {intl.formatMessage(complete ? messages.completedSection : messages.incompleteSection)}
+          , {intl.formatMessage(statusLabel)}
         </span>
       </div>
+      {totalCount > 0 && (
+        <div className="col-auto p-0 ml-2">
+          <span className="leti-section-progress" aria-hidden="true">
+            {completedCount}/{totalCount}
+          </span>
+          <div
+            className="leti-section-progress-bar"
+            role="progressbar"
+            aria-valuemin={0}
+            aria-valuemax={totalCount}
+            aria-valuenow={completedCount}
+            aria-label={intl.formatMessage(messages.sectionProgress, {
+              completed: completedCount,
+              total: totalCount,
+            })}
+          >
+            <span
+              className="leti-section-progress-bar__fill"
+              style={{ width: `${totalCount ? (completedCount / totalCount) * 100 : 0}%` }}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 
   return (
-    <li>
+    <li className="leti-soft-section">
       <Collapsible
-        className="mb-2"
+        className="mb-3 leti-soft-section__collapsible"
         styling="card-lg"
         title={sectionTitle}
         open={open}
@@ -81,7 +98,7 @@ function Section({
         iconWhenClosed={(
           <IconButton
             alt={intl.formatMessage(messages.openSection)}
-            icon={faPlus}
+            icon={faChevronDown}
             onClick={() => { setOpen(true); }}
             size="sm"
           />
@@ -89,13 +106,13 @@ function Section({
         iconWhenOpen={(
           <IconButton
             alt={intl.formatMessage(genericMessages.close)}
-            icon={faMinus}
+            icon={faChevronUp}
             onClick={() => { setOpen(false); }}
             size="sm"
           />
         )}
       >
-        <ol className="list-unstyled">
+        <ol className="list-unstyled leti-soft-section__units">
           {sequenceIds.map((sequenceId, index) => (
             <SequenceLink
               key={sequenceId}

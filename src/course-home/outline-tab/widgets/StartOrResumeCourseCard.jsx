@@ -41,7 +41,7 @@ function StartOrResumeCourseCard({ intl }) {
   };
 
   return (
-    <Card className="mb-3 raised-card" data-testid="start-resume-card">
+    <Card className="mb-3 leti-start-resume-card" data-testid="start-resume-card">
       <Card.Header
         title={hasVisitedCourse ? intl.formatMessage(messages.resumeBlurb) : intl.formatMessage(messages.startBlurb)}
         actions={(

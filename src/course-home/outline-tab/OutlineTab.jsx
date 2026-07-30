@@ -10,7 +10,6 @@ import { AlertList } from '../../generic/user-messages';
 
 import CourseDates from './widgets/CourseDates';
 import CourseHandouts from './widgets/CourseHandouts';
-import StartOrResumeCourseCard from './widgets/StartOrResumeCourseCard';
 import WeeklyLearningGoalCard from './widgets/WeeklyLearningGoalCard';
 import CourseTools from './widgets/CourseTools';
 import { fetchOutlineTab } from '../data';
@@ -41,7 +40,6 @@ function OutlineTab({ intl }) {
   const {
     isSelfPaced,
     org,
-    title,
     userTimezone,
   } = useModel('courseHomeMeta', courseId);
 
@@ -128,108 +126,99 @@ function OutlineTab({ intl }) {
   }, [location.search]);
 
   return (
-    <>
-      <div data-learner-type={learnerType} className="row w-100 mx-0 my-3 justify-content-between">
-        <div className="col-12 col-sm-auto p-0">
-          <div role="heading" aria-level="1" className="h2">{title}</div>
-        </div>
+    <div data-learner-type={learnerType} className="row course-outline-tab">
+      <AccountActivationAlert />
+      <div className="col-12">
+        <AlertList
+          topic="outline-private-alerts"
+          customAlerts={{
+            ...privateCourseAlert,
+          }}
+        />
       </div>
-      {/** [MM-P2P] Experiment (className for optimizely trigger) */}
-      <div className="row course-outline-tab">
-        <AccountActivationAlert />
-        <div className="col-12">
+      <div className="col col-12 col-md-8 leti-course-home-outline">
+        { /** [MM-P2P] Experiment (the conditional) */ }
+        { !MMP2P.state.isEnabled
+          && (
           <AlertList
-            topic="outline-private-alerts"
+            topic="outline-course-alerts"
+            className="mb-3"
             customAlerts={{
-              ...privateCourseAlert,
+              ...certificateAvailableAlert,
+              ...courseEndAlert,
+              ...courseStartAlert,
+              ...scheduledContentAlert,
             }}
           />
-        </div>
-        <div className="col col-12 col-md-8">
-          { /** [MM-P2P] Experiment (the conditional) */ }
-          { !MMP2P.state.isEnabled
-            && (
-            <AlertList
-              topic="outline-course-alerts"
-              className="mb-3"
-              customAlerts={{
-                ...certificateAvailableAlert,
-                ...courseEndAlert,
-                ...courseStartAlert,
-                ...scheduledContentAlert,
-              }}
-            />
-            )}
-          {isSelfPaced && hasDeadlines && !MMP2P.state.isEnabled && (
-            <>
-              <ShiftDatesAlert model="outline" fetch={fetchOutlineTab} />
-              <UpgradeToShiftDatesAlert model="outline" logUpgradeLinkClick={logUpgradeToShiftDatesLinkClick} />
-            </>
           )}
-          <StartOrResumeCourseCard />
-          <WelcomeMessage courseId={courseId} />
-          {rootCourseId && (
-            <>
-              <div className="row w-100 m-0 mb-3 justify-content-end">
-                <div className="col-12 col-md-auto p-0">
-                  <Button variant="outline-primary" block onClick={() => { setExpandAll(!expandAll); }}>
-                    {expandAll ? intl.formatMessage(messages.collapseAll) : intl.formatMessage(messages.expandAll)}
-                  </Button>
-                </div>
-              </div>
-              <ol id="courseHome-outline" className="list-unstyled">
-                {courses[rootCourseId].sectionIds.map((sectionId) => (
-                  <Section
-                    key={sectionId}
-                    courseId={courseId}
-                    defaultOpen={sections[sectionId].resumeBlock}
-                    expand={expandAll}
-                    section={sections[sectionId]}
-                  />
-                ))}
-              </ol>
-            </>
-          )}
-        </div>
+        {isSelfPaced && hasDeadlines && !MMP2P.state.isEnabled && (
+          <>
+            <ShiftDatesAlert model="outline" fetch={fetchOutlineTab} />
+            <UpgradeToShiftDatesAlert model="outline" logUpgradeLinkClick={logUpgradeToShiftDatesLinkClick} />
+          </>
+        )}
+        <WelcomeMessage courseId={courseId} />
         {rootCourseId && (
-          <div className="col col-12 col-md-4">
-            <ProctoringInfoPanel />
-            { /** Defer showing the goal widget until the ProctoringInfoPanel has resolved or has been determined as
-             disabled to avoid components bouncing around too much as screen is rendered */ }
-            {(!enableProctoredExams || proctoringPanelStatus === 'loaded') && weeklyLearningGoalEnabled && (
-              <WeeklyLearningGoalCard
-                daysPerWeek={selectedGoal && 'daysPerWeek' in selectedGoal ? selectedGoal.daysPerWeek : null}
-                subscribedToReminders={selectedGoal && 'subscribedToReminders' in selectedGoal ? selectedGoal.subscribedToReminders : false}
-              />
-            )}
-            <CourseTools />
-            { /** [MM-P2P] Experiment (conditional) */ }
-            { MMP2P.state.isEnabled
-              ? <MMP2PFlyover isStatic options={MMP2P} />
-              : (
-                <UpgradeNotification
-                  offer={offer}
-                  verifiedMode={verifiedMode}
-                  accessExpiration={accessExpiration}
-                  contentTypeGatingEnabled={datesBannerInfo.contentTypeGatingEnabled}
-                  marketingUrl={marketingUrl}
-                  upsellPageName="course_home"
-                  userTimezone={userTimezone}
-                  shouldDisplayBorder
-                  timeOffsetMillis={timeOffsetMillis}
+          <>
+            <div className="row w-100 m-0 mb-3 justify-content-end">
+              <div className="col-12 col-md-auto p-0">
+                <Button variant="outline-primary" block onClick={() => { setExpandAll(!expandAll); }}>
+                  {expandAll ? intl.formatMessage(messages.collapseAll) : intl.formatMessage(messages.expandAll)}
+                </Button>
+              </div>
+            </div>
+            <ol id="courseHome-outline" className="list-unstyled">
+              {courses[rootCourseId].sectionIds.map((sectionId) => (
+                <Section
+                  key={sectionId}
                   courseId={courseId}
-                  org={org}
+                  defaultOpen={sections[sectionId].resumeBlock}
+                  expand={expandAll}
+                  section={sections[sectionId]}
                 />
-              )}
-            <CourseDates
-              /** [MM-P2P] Experiment */
-              mmp2p={MMP2P}
-            />
-            <CourseHandouts />
-          </div>
+              ))}
+            </ol>
+          </>
         )}
       </div>
-    </>
+      {rootCourseId && (
+        <div className="col col-12 col-md-4 leti-course-home-sidebar">
+          <CourseTools />
+          <CourseDates
+            /** [MM-P2P] Experiment */
+            mmp2p={MMP2P}
+          />
+          <CourseHandouts />
+          <ProctoringInfoPanel />
+          { /** Defer showing the goal widget until the ProctoringInfoPanel has resolved or has been determined as
+           disabled to avoid components bouncing around too much as screen is rendered */ }
+          {(!enableProctoredExams || proctoringPanelStatus === 'loaded') && weeklyLearningGoalEnabled && (
+            <WeeklyLearningGoalCard
+              daysPerWeek={selectedGoal && 'daysPerWeek' in selectedGoal ? selectedGoal.daysPerWeek : null}
+              subscribedToReminders={selectedGoal && 'subscribedToReminders' in selectedGoal ? selectedGoal.subscribedToReminders : false}
+            />
+          )}
+          { /** [MM-P2P] Experiment (conditional) */ }
+          { MMP2P.state.isEnabled
+            ? <MMP2PFlyover isStatic options={MMP2P} />
+            : (
+              <UpgradeNotification
+                offer={offer}
+                verifiedMode={verifiedMode}
+                accessExpiration={accessExpiration}
+                contentTypeGatingEnabled={datesBannerInfo.contentTypeGatingEnabled}
+                marketingUrl={marketingUrl}
+                upsellPageName="course_home"
+                userTimezone={userTimezone}
+                shouldDisplayBorder
+                timeOffsetMillis={timeOffsetMillis}
+                courseId={courseId}
+                org={org}
+              />
+            )}
+        </div>
+      )}
+    </div>
   );
 }
 

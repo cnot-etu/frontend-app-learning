@@ -67,8 +67,8 @@ const messages = defineMessages({
   },
   handouts: {
     id: 'learning.outline.handouts',
-    defaultMessage: 'Course Handouts',
-    description: 'Header for (Course Handouts) section in course outline',
+    defaultMessage: 'Additional materials',
+    description: 'Header for additional course materials / handouts section in course outline',
   },
   incompleteAssignment: {
     id: 'learning.outline.incompleteAssignment',
@@ -79,6 +79,21 @@ const messages = defineMessages({
     id: 'learning.outline.incompleteSection',
     defaultMessage: 'Incomplete section',
     description: 'Text used to describe the gray checkmark icon in front of a section title',
+  },
+  inProgressSection: {
+    id: 'learning.outline.inProgressSection',
+    defaultMessage: 'In progress section',
+    description: 'Text used to describe the in-progress icon in front of a section title',
+  },
+  lockedAssignment: {
+    id: 'learning.outline.lockedAssignment',
+    defaultMessage: 'Locked',
+    description: 'Text used to describe the lock icon in front of an unavailable assignment',
+  },
+  sectionProgress: {
+    id: 'learning.outline.sectionProgress',
+    defaultMessage: '{completed} of {total} complete',
+    description: 'Section completion progress for screen readers',
   },
   intenseGoalButtonText: {
     id: 'learning.outline.goalButton.intense.text',

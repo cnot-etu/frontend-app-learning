@@ -29,7 +29,7 @@
 }
 
 .donut-chart-text {
-  fill: $primary-500;
+  fill: #00497c;
   -moz-transform: translateY(0.25em);
   -ms-transform: translateY(0.25em);
   -webkit-transform: translateY(0.25em);
@@ -56,7 +56,7 @@
 
 .donut-ring, .donut-segment, .donut-hole {
   &.complete-stroke {
-    stroke: $info-500;
+    stroke: #00497c;
   }
 
   &.divider-stroke {
@@ -69,6 +69,6 @@
   }
 
   &.locked-stroke {
-    stroke: $primary-500;
+    stroke: #00497c;
   }
 }
