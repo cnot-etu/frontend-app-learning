@@ -13,6 +13,7 @@ import DroppableAssignmentFootnote from './DroppableAssignmentFootnote';
 import GradeSummaryTableFooter from './GradeSummaryTableFooter';
 
 import messages from '../messages';
+import translateAssignmentType from '../translateAssignmentType';
 
 function GradeSummaryTable({ intl, setAllOfSomeAssignmentTypeIsLocked }) {
   const {
@@ -60,7 +61,7 @@ function GradeSummaryTable({ intl, setAllOfSomeAssignmentTypeIsLocked }) {
       footnotes.push({
         id: footnoteId,
         numDroppable: assignment.numDroppable,
-        assignmentType: assignment.type,
+        assignmentType: assignment.displayType || assignment.type,
       });
 
       footnoteMarker = footnotes.length;
@@ -72,7 +73,11 @@ function GradeSummaryTable({ intl, setAllOfSomeAssignmentTypeIsLocked }) {
 
     return {
       type: {
-        footnoteId, footnoteMarker, type: assignment.type, locked,
+        footnoteId,
+        footnoteMarker,
+        // Prefer precomputed displayType from api.js; fall back to live translate.
+        type: assignment.displayType || translateAssignmentType(intl, assignment.type),
+        locked,
       },
       weight: { weight: `${(assignment.weight * 100).toFixed(0)}${isLocaleRtl ? '\u200f' : ''}%`, locked },
       grade: { grade: `${(assignment.averageGrade * 100).toFixed(0)}${isLocaleRtl ? '\u200f' : ''}%`, locked },

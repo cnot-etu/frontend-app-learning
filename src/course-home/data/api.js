@@ -1,7 +1,9 @@
 import { camelCaseObject, getConfig } from '@edx/frontend-platform';
 import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
+import { getLocale } from '@edx/frontend-platform/i18n';
 import { logInfo } from '@edx/frontend-platform/logging';
 import { appendBrowserTimezoneToUrl } from '../../utils';
+import translateAssignmentType from '../progress-tab/grades/translateAssignmentType';
 
 const calculateAssignmentTypeGrades = (points, assignmentWeight, numDroppable) => {
   let dropCount = numDroppable;
@@ -79,11 +81,16 @@ function normalizeAssignmentPolicies(assignmentPolicies, sectionScores) {
       assignment.numDroppable,
     );
 
+    // Prefer LMS-provided type_label; otherwise translate locally by locale.
+    const displayType = assignment.typeLabel
+      || translateAssignmentType({ locale: getLocale() }, assignment.type);
+
     return {
       averageGrade,
       numDroppable: assignment.numDroppable,
       shortLabel: assignment.shortLabel,
       type: assignment.type,
+      displayType,
       weight: assignment.weight,
       weightedGrade,
     };

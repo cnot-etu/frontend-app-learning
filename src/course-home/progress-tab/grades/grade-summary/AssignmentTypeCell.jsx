@@ -6,6 +6,7 @@ import { Blocked } from '@edx/paragon/icons';
 import { Icon } from '@edx/paragon';
 import { useModel } from '../../../../generic/model-store';
 import messages from '../messages';
+import translateAssignmentType from '../translateAssignmentType';
 
 function AssignmentTypeCell({
   intl, assignmentType, footnoteMarker, footnoteId, locked,
@@ -18,13 +19,14 @@ function AssignmentTypeCell({
     gradesFeatureIsFullyLocked,
   } = useModel('progress', courseId);
 
-  const lockedIcon = locked ? <Icon id={`assignmentTypeBlockedIcon${assignmentType}`} aria-label={intl.formatMessage(messages.noAccessToAssignmentType, { assignmentType })} className="mr-1 mt-1 d-inline-flex" style={{ height: '1rem', width: '1rem' }} src={Blocked} data-testid="blocked-icon" /> : '';
+  const translatedType = translateAssignmentType(intl, assignmentType);
+  const lockedIcon = locked ? <Icon id={`assignmentTypeBlockedIcon${assignmentType}`} aria-label={intl.formatMessage(messages.noAccessToAssignmentType, { assignmentType: translatedType })} className="mr-1 mt-1 d-inline-flex" style={{ height: '1rem', width: '1rem' }} src={Blocked} data-testid="blocked-icon" /> : '';
 
   return (
     <div className="d-flex small">
       <div className="d-flex">{lockedIcon}</div>
       <div>
-        {assignmentType}&nbsp;
+        {translatedType}&nbsp;
         {footnoteId && footnoteMarker && (
           <sup>
             <a

@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 
 import messages from '../messages';
+import translateAssignmentType from '../translateAssignmentType';
 import { useModel } from '../../../../generic/model-store';
 
 function DroppableAssignmentFootnote({ footnotes, intl }) {
@@ -26,7 +27,7 @@ function DroppableAssignmentFootnote({ footnotes, intl }) {
               defaultMessage="The lowest {numDroppable, plural, one{# {assignmentType} score is} other{# {assignmentType} scores are}} dropped."
               values={{
                 numDroppable: footnote.numDroppable,
-                assignmentType: footnote.assignmentType,
+                assignmentType: translateAssignmentType(intl, footnote.assignmentType),
               }}
             />
             <a className="sr-only" href={`#${footnote.id}-ref`} tabIndex={gradesFeatureIsFullyLocked ? '-1' : '0'}>

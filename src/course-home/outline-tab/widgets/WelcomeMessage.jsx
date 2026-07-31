@@ -32,6 +32,10 @@ function WelcomeMessage({ courseId, intl }) {
       variant="light"
       stacked
       dismissible
+      closeLabel={intl.formatMessage({
+        id: 'pgn.Alert.closeLabel',
+        defaultMessage: 'Dismiss',
+      })}
       show={display}
       onClose={() => {
         setDisplay(false);

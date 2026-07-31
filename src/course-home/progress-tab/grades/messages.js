@@ -6,6 +6,36 @@ const messages = defineMessages({
     defaultMessage: 'Assignment type',
     description: 'Header for column that indicate type of the assignment in grade summary table',
   },
+  assignmentTypeOther: {
+    id: 'progress.assignmentType.other',
+    defaultMessage: 'Other',
+    description: 'Label for the Other assignment type from the course grading policy',
+  },
+  assignmentTypeGradedAssignments: {
+    id: 'progress.assignmentType.gradedAssignments',
+    defaultMessage: 'Graded Assignments',
+    description: 'Label for the Graded Assignments assignment type from the course grading policy',
+  },
+  assignmentTypeHomework: {
+    id: 'progress.assignmentType.homework',
+    defaultMessage: 'Homework',
+    description: 'Label for the Homework assignment type from the course grading policy',
+  },
+  assignmentTypeExam: {
+    id: 'progress.assignmentType.exam',
+    defaultMessage: 'Exam',
+    description: 'Label for the Exam assignment type from the course grading policy',
+  },
+  assignmentTypeMidtermExam: {
+    id: 'progress.assignmentType.midtermExam',
+    defaultMessage: 'Midterm Exam',
+    description: 'Label for the Midterm Exam assignment type from the course grading policy',
+  },
+  assignmentTypeFinalExam: {
+    id: 'progress.assignmentType.finalExam',
+    defaultMessage: 'Final Exam',
+    description: 'Label for the Final Exam assignment type from the course grading policy',
+  },
   backToContent: {
     id: 'progress.footnotes.backToContent',
     defaultMessage: 'Back to content',

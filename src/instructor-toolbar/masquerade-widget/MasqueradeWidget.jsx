@@ -14,6 +14,20 @@ import {
   postMasqueradeOptions,
 } from './data/api';
 import messages from './messages';
+import toolbarMessages from '../messages';
+
+function translateMasqueradeLabel(intl, name) {
+  if (!name) {
+    return name;
+  }
+  const map = {
+    Staff: toolbarMessages.staff,
+    Learner: toolbarMessages.learner,
+    'Specific Student...': toolbarMessages.specificStudent,
+  };
+  const message = map[name];
+  return message ? intl.formatMessage(message) : name;
+}
 
 class MasqueradeWidget extends Component {
   constructor(props) {
@@ -84,6 +98,7 @@ class MasqueradeWidget extends Component {
       <MasqueradeWidgetOption
         groupId={group.groupId}
         groupName={group.name}
+        displayName={translateMasqueradeLabel(this.props.intl, group.name)}
         key={group.name}
         role={group.role}
         selected={active}
@@ -120,10 +135,12 @@ class MasqueradeWidget extends Component {
     return (
       <div className="flex-grow-1">
         <div className="row">
-          <span className="col-auto col-form-label pl-3">View this course as:</span>
+          <span className="col-auto col-form-label pl-3">
+            {this.props.intl.formatMessage(toolbarMessages.viewCourseAs)}
+          </span>
           <Dropdown className="flex-shrink-1 mx-1">
             <Dropdown.Toggle variant="outline-primary">
-              {masquerade}
+              {translateMasqueradeLabel(this.props.intl, masquerade)}
             </Dropdown.Toggle>
             <Dropdown.Menu>
               {options}

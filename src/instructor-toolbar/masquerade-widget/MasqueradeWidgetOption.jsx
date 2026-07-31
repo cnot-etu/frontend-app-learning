@@ -57,6 +57,7 @@ class MasqueradeWidgetOption extends Component {
   render() {
     const {
       groupName,
+      displayName,
     } = this.props;
     if (!groupName) {
       return null;
@@ -72,12 +73,13 @@ class MasqueradeWidgetOption extends Component {
         href="#"
         onClick={(event) => this.onClick(event)}
       >
-        {groupName}
+        {displayName || groupName}
       </Dropdown.Item>
     );
   }
 }
 MasqueradeWidgetOption.propTypes = {
+  displayName: PropTypes.string,
   groupId: PropTypes.number,
   groupName: PropTypes.string.isRequired,
   onSubmit: PropTypes.func.isRequired,
@@ -94,6 +96,7 @@ MasqueradeWidgetOption.propTypes = {
   userPartitionId: PropTypes.number,
 };
 MasqueradeWidgetOption.defaultProps = {
+  displayName: null,
   groupId: null,
   role: null,
   selected: null,
