@@ -94,10 +94,10 @@ function resolveLocaleKey(locale) {
     return normalized === 'fr-ca' ? 'fr' : 'fr';
   }
   if (normalized.startsWith('es')) {
-    return normalized === 'es-419' ? 'es-419' : 'es-es';
+    return normalized === 'es-419' ? 'es-419' : 'es';
   }
   if (normalized.startsWith('pt')) {
-    return normalized === 'pt-br' ? 'pt-br' : 'pt-pt';
+    return normalized === 'pt-br' ? 'pt-br' : 'pt';
   }
   if (normalized.startsWith('en')) {
     return 'en';

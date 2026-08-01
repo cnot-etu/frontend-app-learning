@@ -18,7 +18,8 @@ import ukMessages from './messages/uk.json';
 const messages = {
   ar: arMessages,
   'es-419': es419Messages,
-  'es-es': esEsMessages,
+  es: esEsMessages,
+  'es-es': esEsMessages, // legacy cookie alias
   fr: frMessages,
   'zh-cn': zhcnMessages,
   ca: caMessages,
@@ -27,7 +28,8 @@ const messages = {
   'ko-kr': kokrMessages,
   pl: plMessages,
   'pt-br': ptbrMessages,
-  'pt-pt': ptPtMessages,
+  pt: ptPtMessages,
+  'pt-pt': ptPtMessages, // legacy cookie alias
   ru: ruMessages,
   th: thMessages,
   uk: ukMessages,
