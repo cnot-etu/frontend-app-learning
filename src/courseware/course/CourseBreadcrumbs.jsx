@@ -19,7 +19,7 @@ function CourseBreadcrumb({
   return (
     <>
       {withSeparator && (
-        <li className="col-auto p-0 mx-2 text-primary-500 text-truncate text-nowrap" role="presentation" aria-hidden>/</li>
+        <li className="col-auto p-0 mx-2 text-primary text-truncate text-nowrap" role="presentation" aria-hidden>/</li>
       )}
 
       <li style={{
@@ -31,7 +31,7 @@ function CourseBreadcrumb({
         { getConfig().ENABLE_JUMPNAV !== 'true' || content.length < 2 || !isStaff
           ? (
             <Link
-              className="text-primary-500"
+              className="text-primary"
               to={defaultContent.sequences.length
                 ? `/course/${courseId}/${defaultContent.sequences[0].id}`
                 : `/course/${courseId}/${defaultContent.id}`}
