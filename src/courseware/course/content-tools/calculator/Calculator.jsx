@@ -40,7 +40,7 @@ class Calculator extends Component {
   render() {
     return (
       <Collapsible.Advanced className="calculator">
-        <div className="text-right">
+        <div className="text-left">
           <Collapsible.Trigger tag="a" className="trigger btn">
             <Collapsible.Visible whenOpen>
               <FontAwesomeIcon icon={faTimesCircle} aria-hidden="true" className="mr-2" />
