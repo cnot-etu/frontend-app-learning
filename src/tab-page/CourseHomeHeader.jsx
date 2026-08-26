@@ -47,11 +47,11 @@ function CourseHomeHeader({ courseId, intl }) {
       data-testid="course-home-header"
       style={{
         backgroundColor: '#00417d',
-          backgroundImage: `url(${courseProfileBg})`,
+        backgroundImage: `url(${courseProfileBg})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
-        minHeight: 373,
-        padding: '75px 0 64px',
+        minHeight: 0,
+        padding: '38px 0 32px',
         display: 'flex',
         alignItems: 'center',
       }}
