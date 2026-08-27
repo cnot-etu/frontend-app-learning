@@ -484,8 +484,8 @@
   "tours.weeklyGoalsCheckpoint.title": "Установите цель курса",
   "unit.bookmark.button.add.bookmark": "Добавить страницу в закладки",
   "unit.bookmark.button.remove.bookmark": "Добавлено в закладки",
-  "upgrade.container": "",
-  "upgrade.no.message": "",
+  "upgrade.container": "Панель обновления",
+  "upgrade.no.message": "Нет доступных вариантов обновления.",
   "upgrade.open.button": "Показать панель обновления",
   "upgrade.responsive.close.button": "Вернуться к курсу",
   "upgrade.title": "Обновление"
