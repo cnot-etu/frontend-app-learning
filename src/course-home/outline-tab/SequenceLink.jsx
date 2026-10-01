@@ -57,7 +57,7 @@ function SequenceLink({
             <span className="sr-only">
               , {intl.formatMessage(statusLabel)}
             </span>
-            <EffortEstimate className="ml-3 align-middle" block={sequence} />
+            <EffortEstimate className="ml-3 align-middle" block={sequence} showActivities={false} />
           </div>
         </div>
         {due && (

@@ -15,6 +15,7 @@ function EffortEstimate(props) {
     },
     className,
     intl,
+    showActivities,
   } = props;
 
   const minuteCount = Math.ceil(effortTime / 60); // effortTime is in seconds
@@ -26,10 +27,13 @@ function EffortEstimate(props) {
       <span className="sr-only">{minutesFull}</span>
     </>
   );
-  const activities = intl.formatMessage(messages.activities, { activityCount: effortActivities });
+  const hasActivities = showActivities && effortActivities;
+  const activities = hasActivities
+    ? intl.formatMessage(messages.activities, { activityCount: effortActivities })
+    : null;
   let content = null;
 
-  if (effortTime && effortActivities) {
+  if (effortTime && hasActivities) {
     content = (
       <FormattedMessage
         id="learning.effortEstimation.combinedEstimate"
@@ -40,7 +44,7 @@ function EffortEstimate(props) {
     );
   } else if (effortTime) {
     content = minutes;
-  } else if (effortActivities) {
+  } else if (hasActivities) {
     content = activities;
   } else {
     return null;
@@ -58,6 +62,7 @@ function EffortEstimate(props) {
 
 EffortEstimate.defaultProps = {
   className: null,
+  showActivities: true,
 };
 
 EffortEstimate.propTypes = {
@@ -67,6 +72,7 @@ EffortEstimate.propTypes = {
   }).isRequired,
   className: PropTypes.string,
   intl: intlShape.isRequired,
+  showActivities: PropTypes.bool,
 };
 
 export default injectIntl(EffortEstimate);
