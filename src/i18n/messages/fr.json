@@ -187,7 +187,7 @@
   "learning.celebration.completed": "Vous avez complété la première section de votre cours.",
   "learning.celebration.congrats": "Félicitations !",
   "learning.celebration.earned": "Vous l'avez mérité !",
-  "learning.celebration.emailBody": "",
+  "learning.celebration.emailBody": "À quoi consacrez-vous votre temps d'apprentissage ?",
   "learning.celebration.emailSubject": "Je suis en passe de compléter {title} en ligne avec {platform} !",
   "learning.celebration.forward": "Continuer",
   "learning.celebration.goalCongrats": "Félicitations, vous avez atteint votre objectif d'apprentissage de {nTimes} par semaine.",

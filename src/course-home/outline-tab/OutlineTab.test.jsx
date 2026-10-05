@@ -154,6 +154,17 @@ describe('Outline Tab', () => {
       const sequenceLink = screen.getByText('Title of Sequence');
       expect(sequenceLink.getAttribute('href')).toContain(`/course/${courseId}`);
     });
+
+    it('does not display activity estimates for sequences', async () => {
+      const { courseBlocks } = await buildMinimalCourseBlocks(courseId, 'Title', { resumeBlock: true });
+      setTabData({
+        course_blocks: { blocks: courseBlocks.blocks },
+      });
+      await fetchAndRender();
+
+      expect(screen.queryByText(/activities?/)).not.toBeInTheDocument();
+      expect(screen.getByText('1 min')).toBeInTheDocument();
+    });
   });
 
   describe('Suggested schedule alerts', () => {
